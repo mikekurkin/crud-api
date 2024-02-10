@@ -2,18 +2,55 @@
   "name": "crud-api",
   "version": "0.0.0-develop",
   "description": "RS School NodeJS course assignment",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "test": "jest --silent"
+    "format": "prettier --write \"src/**/*.ts\" index.ts",
+    "lint": "eslint \"src/**/*.ts\" index.ts --fix",
+    "test": "jest --silent",
+    "test:verbose": "jest",
+    "build": "tsc",
+    "start": "ts-node .",
+    "start:dev": "nodemon"
+  },
+  "files": [
+    "index.ts",
+    "src"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mikekurkin/crud-api.git"
   },
-  "author": "mikekurkin",
-  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^29.5.2",
+    "@types/node": "^20.3.1",
+    "@types/uuid": "9.0.8",
+    "@typescript-eslint/eslint-plugin": "^5.60.0",
+    "@typescript-eslint/parser": "^5.60.0",
+    "eslint": "^8.43.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "jest": "^29.5.0",
+    "nodemon": "3.0.3",
+    "prettier": "^2.8.8",
+    "ts-jest": "^29.1.0",
+    "ts-node": "10.9.2",
+    "typescript": "^5.0.4"
+  },
+  "author": {
+    "name": "Mike Kurkin",
+    "email": "mike@kurk.in",
+    "url": "https://github.com/mikekurkin"
+  },
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/mikekurkin/crud-api/issues"
   },
-  "homepage": "https://github.com/mikekurkin/crud-api#readme"
+  "homepage": "https://github.com/mikekurkin/crud-api#readme",
+  "dependencies": {
+    "dotenv": "16.4.2",
+    "uuid": "9.0.1"
+  }
 }
