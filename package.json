@@ -2,10 +2,10 @@
   "name": "crud-api",
   "version": "0.0.0-develop",
   "description": "RS School NodeJS course assignment",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "scripts": {
-    "format": "prettier --write \"src/**/*.ts\" index.ts",
-    "lint": "eslint \"src/**/*.ts\" index.ts --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint \"src/**/*.ts\" --fix",
     "test": "jest --silent",
     "test:verbose": "jest",
     "build": "tsc",
@@ -13,7 +13,6 @@
     "start:dev": "nodemon"
   },
   "files": [
-    "index.ts",
     "src"
   ],
   "engines": {
