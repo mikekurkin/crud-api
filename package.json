@@ -1,0 +1,19 @@
+{
+  "name": "crud-api",
+  "version": "0.0.0-develop",
+  "description": "RS School NodeJS course assignment",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --silent"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikekurkin/crud-api.git"
+  },
+  "author": "mikekurkin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mikekurkin/crud-api/issues"
+  },
+  "homepage": "https://github.com/mikekurkin/crud-api#readme"
+}
