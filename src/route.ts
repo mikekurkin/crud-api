@@ -7,6 +7,9 @@ export const notFoundHandler: ApiHandler = () => {
 export const badRequestHandler: ApiHandler = () => {
   return { code: 400, data: 'Bad Request' };
 };
+export const serverErrorHandler: ApiHandler = () => {
+  return { code: 500, data: 'Internal Server Error' };
+};
 
 export const route: ApiRouter = (method?: string, url?: string) => {
   const apiRoot = process.env.API_ROOT || '/api/';

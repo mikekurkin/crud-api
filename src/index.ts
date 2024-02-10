@@ -8,8 +8,9 @@ const app = () => {
   const crudServer = createServerHttp((req, res) => {
     const handler = route(req.method, req.url);
     const { code, data } = handler();
+    res.setHeader('Content-Type', 'application/json');
     res.writeHead(code);
-    res.end(data);
+    res.end(JSON.stringify(data));
   });
 
   crudServer.listen(PORT, () => {
