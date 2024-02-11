@@ -25,8 +25,11 @@ export const route: ApiRouter = (method?: string, url?: string) => {
   })();
   if (!action || !resource || !routes[resource]?.[action])
     return badRequestHandler;
-  const handler: ApiHandler = () => {
-    return routes[resource]![action]!(resourceId);
+  const handler: ApiHandler = (requestData?) => {
+    return routes[resource]![action]!({
+      ...(requestData || { get: {}, post: {} }),
+      resourceId,
+    });
   };
   return handler;
 };

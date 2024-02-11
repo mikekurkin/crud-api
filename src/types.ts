@@ -4,8 +4,10 @@ type HandlerResponse = {
 };
 
 type ApiHandler = {
-  (resourceId?: string): HandlerResponse;
+  (requestData?: RequestData): HandlerResponse;
 };
+
+type RequestData = { resourceId?: string; get: {}; post: {} };
 
 type ApiRouter = {
   (method?: string, url?: string): ApiHandler;
@@ -17,4 +19,10 @@ type HandlersDictionary = {
   };
 };
 
-export { ApiHandler, ApiRouter, HandlerResponse, HandlersDictionary };
+export {
+  ApiHandler,
+  ApiRouter,
+  HandlerResponse,
+  HandlersDictionary,
+  RequestData,
+};
