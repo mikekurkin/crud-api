@@ -26,7 +26,7 @@ export const routes: HandlersDictionary = {
         userData.age,
         userData.hobbies,
       );
-      if (!user) throw new ServerError('User Cannot Be Created');
+      if (user === null) throw new ServerError('User Cannot Be Created');
       return { code: 201, data: user };
     },
     read: (data) => {
@@ -34,14 +34,30 @@ export const routes: HandlersDictionary = {
       if (!resourceId || !uuidValidate(resourceId))
         throw new BadRequestError('Invalid ID');
       const user = users.read(resourceId);
-      if (user == null) throw new NotFoundError('User Not Found');
+      if (user === null) throw new NotFoundError('User Not Found');
       return { code: 200, data: user };
     },
-    update: () => {
-      return { code: 200, data: 'update user placeholder' };
+    update: (data) => {
+      const { resourceId } = data!;
+      if (!resourceId || !uuidValidate(resourceId))
+        throw new BadRequestError('Invalid ID');
+      const userData = data?.post as User;
+      const user = users.update(
+        resourceId,
+        userData.username,
+        userData.age,
+        userData.hobbies,
+      );
+      if (user === null) throw new NotFoundError('User Not Found');
+      return { code: 201, data: user };
     },
-    delete: () => {
-      return { code: 200, data: 'delete user placeholder' };
+    delete: (data) => {
+      const { resourceId } = data!;
+      if (!resourceId || !uuidValidate(resourceId))
+        throw new BadRequestError('Invalid ID');
+      const user = users.delete(resourceId);
+      if (user === null) throw new NotFoundError('User Not Found');
+      return { code: 204, data: {} };
     },
   },
 };

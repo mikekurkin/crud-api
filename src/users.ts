@@ -15,15 +15,15 @@ export class UsersDB {
   }
 
   list() {
-    return this.entries;
+    return Object.values(this.entries);
   }
 
-  create(username: string, age: number, hobbies?: string[]) {
+  create(username: string, age: number, hobbies: string[]) {
     const newUser: User = {
       id: uuid(),
       username,
       age,
-      hobbies: hobbies || [],
+      hobbies: hobbies instanceof Array ? hobbies : [hobbies],
     };
     if (this.entries[newUser.id]) return null;
     this.entries[newUser.id] = newUser;
@@ -41,7 +41,7 @@ export class UsersDB {
 
     if (username) user.username = username;
     if (age) user.age = age;
-    if (hobbies) user.hobbies = hobbies;
+    if (hobbies) user.hobbies = hobbies instanceof Array ? hobbies : [hobbies];
 
     return user;
   }
