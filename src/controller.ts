@@ -49,7 +49,7 @@ export const routes: HandlersDictionary = {
         userData.hobbies,
       );
       if (user === null) throw new NotFoundError('User Not Found');
-      return { code: 201, data: user };
+      return { code: 200, data: user };
     },
     delete: (data) => {
       const { resourceId } = data!;
