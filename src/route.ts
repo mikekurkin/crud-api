@@ -4,7 +4,7 @@ import {
   NotFoundError,
   ServerError,
 } from './errors.ts';
-import { routes } from './routes.ts';
+import { routes } from './controller.ts';
 import { ApiHandler, ApiRouter } from './types.ts';
 
 const errorHandler = (err: Error): ApiHandler => {
