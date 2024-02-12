@@ -1,7 +1,7 @@
 import { HandlersDictionary } from 'types';
 import { validate as uuidValidate } from 'uuid';
-import { BadRequestError, NotFoundError, ServerError } from './errors.ts';
-import { User, users } from './users.ts';
+import { BadRequestError, NotFoundError, ServerError } from './errors';
+import { User, users } from './users';
 
 export const routes: HandlersDictionary = {
   users: {

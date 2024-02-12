@@ -10,7 +10,8 @@
     "test:verbose": "jest",
     "build": "tsc",
     "start": "ts-node .",
-    "start:dev": "nodemon"
+    "start:dev": "nodemon",
+    "start:prod": "tsc && node dist"
   },
   "files": [
     "src"

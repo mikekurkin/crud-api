@@ -1,11 +1,11 @@
+import { routes } from './controller';
 import {
   BadRequestError,
   HttpError,
   NotFoundError,
   ServerError,
-} from './errors.ts';
-import { routes } from './controller.ts';
-import { ApiHandler, ApiRouter } from './types.ts';
+} from './errors';
+import { ApiHandler, ApiRouter } from './types';
 
 const errorHandler = (err: Error): ApiHandler => {
   const httpErr = err instanceof HttpError ? err : new ServerError(err.message);

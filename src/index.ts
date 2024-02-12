@@ -1,7 +1,7 @@
 import 'dotenv/config.js';
 import { createServer as createServerHttp } from 'node:http';
 import { parse } from 'querystring';
-import { route } from './route.ts';
+import { route } from './route';
 
 const app = () => {
   const PORT = process.env.PORT || 8080;
@@ -23,7 +23,7 @@ const app = () => {
       requestData.post = parse(body);
 
       const { code, data } = handler(requestData);
-      
+
       res.setHeader('Content-Type', 'application/json');
       res.writeHead(code);
       res.end(JSON.stringify(data));
