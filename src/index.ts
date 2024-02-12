@@ -23,6 +23,7 @@ const app = () => {
       requestData.post = parse(body);
 
       const { code, data } = handler(requestData);
+      
       res.setHeader('Content-Type', 'application/json');
       res.writeHead(code);
       res.end(JSON.stringify(data));

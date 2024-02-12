@@ -1,9 +1,6 @@
 import { HandlersDictionary } from 'types';
-import {
-  badRequestHandler,
-  notFoundHandler,
-  serverErrorHandler,
-} from './route.ts';
+import { validate as uuidValidate } from 'uuid';
+import { BadRequestError, NotFoundError, ServerError } from './errors.ts';
 import { User, users } from './users.ts';
 
 export const routes: HandlersDictionary = {
@@ -12,24 +9,32 @@ export const routes: HandlersDictionary = {
       return { code: 200, data: users.list() };
     },
     create: (data) => {
-      var userData = data?.post as User;
+      const requiredFields = ['username', 'age', 'hobbies'];
+      if (
+        !(
+          data?.post &&
+          requiredFields.every((key) => Object.keys(data?.post).includes(key))
+        )
+      )
+        throw new BadRequestError(
+          `Required Fields: ${requiredFields.join(', ')}`,
+        );
+      const userData = data?.post as User;
+
       const user = users.create(
         userData.username,
         userData.age,
         userData.hobbies,
       );
-      return { code: 200, data: user };
+      if (!user) throw new ServerError('User Cannot Be Created');
+      return { code: 201, data: user };
     },
     read: (data) => {
       const { resourceId } = data!;
-      if (!resourceId) return badRequestHandler();
-      let user;
-      try {
-        user = users.read(resourceId);
-      } catch (err) {
-        if (err instanceof RangeError) return notFoundHandler();
-        return serverErrorHandler();
-      }
+      if (!resourceId || !uuidValidate(resourceId))
+        throw new BadRequestError('Invalid ID');
+      const user = users.read(resourceId);
+      if (user == null) throw new NotFoundError('User Not Found');
       return { code: 200, data: user };
     },
     update: () => {

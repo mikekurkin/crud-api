@@ -1,19 +1,24 @@
-import { ApiHandler, ApiRouter } from 'types.ts';
+import {
+  BadRequestError,
+  HttpError,
+  NotFoundError,
+  ServerError,
+} from './errors.ts';
 import { routes } from './routes.ts';
+import { ApiHandler, ApiRouter } from './types.ts';
 
-export const notFoundHandler: ApiHandler = () => {
-  return { code: 404, data: 'Not Found' };
-};
-export const badRequestHandler: ApiHandler = () => {
-  return { code: 400, data: 'Bad Request' };
-};
-export const serverErrorHandler: ApiHandler = () => {
-  return { code: 500, data: 'Internal Server Error' };
+const errorHandler = (err: Error): ApiHandler => {
+  const httpErr = err instanceof HttpError ? err : new ServerError(err.message);
+  return () => ({
+    code: httpErr.code,
+    data: `${httpErr.code}: ${httpErr.message}`,
+  });
 };
 
 export const route: ApiRouter = (method?: string, url?: string) => {
   const apiRoot = process.env.API_ROOT || '/api/';
-  if (!method || !url || !url.startsWith(apiRoot)) return badRequestHandler;
+  if (!method || !url || !url.startsWith(apiRoot))
+    return errorHandler(new BadRequestError());
   const relativeUrl = url.slice(apiRoot.length);
   const [resource, resourceId] = relativeUrl.split('/');
   const action = (() => {
@@ -23,13 +28,18 @@ export const route: ApiRouter = (method?: string, url?: string) => {
     if (method == 'PUT' && resourceId) return 'update';
     if (method == 'DELETE' && resourceId) return 'delete';
   })();
-  if (!action || !resource || !routes[resource]?.[action])
-    return badRequestHandler;
+  if (!action) return errorHandler(new BadRequestError('Method Now Allowed'));
+  if (!resource || !routes[resource]?.[action])
+    return errorHandler(new NotFoundError('Resource Not Found'));
   const handler: ApiHandler = (requestData?) => {
-    return routes[resource]![action]!({
-      ...(requestData || { get: {}, post: {} }),
-      resourceId,
-    });
+    try {
+      return routes[resource]![action]!({
+        ...(requestData || { get: {}, post: {} }),
+        resourceId,
+      });
+    } catch (err) {
+      return errorHandler(err as Error)();
+    }
   };
   return handler;
 };

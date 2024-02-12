@@ -25,19 +25,19 @@ export class UsersDB {
       age,
       hobbies: hobbies || [],
     };
-    if (this.entries[newUser.id]) throw new Error('user can not be created');
+    if (this.entries[newUser.id]) return null;
     this.entries[newUser.id] = newUser;
     return newUser;
   }
 
   read(userId: string) {
-    if (!this.entries[userId]) throw new RangeError('user not found');
+    if (!this.entries[userId]) return null;
     return this.entries[userId]!;
   }
 
   update(userId: string, username?: string, age?: number, hobbies?: string[]) {
     const user = this.entries[userId];
-    if (!user) throw new RangeError('user not found');
+    if (!user) return null;
 
     if (username) user.username = username;
     if (age) user.age = age;
@@ -48,7 +48,7 @@ export class UsersDB {
 
   delete(userId: string) {
     const user = this.entries[userId];
-    if (!user) throw new RangeError('user not found');
+    if (!user) return null;
 
     delete this.entries[userId];
     return;
